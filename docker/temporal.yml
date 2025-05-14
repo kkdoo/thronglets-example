@@ -1,0 +1,47 @@
+services:
+  t-temporal:
+    container_name: t-temporal
+    depends_on:
+      - t-postgresql
+      - t-elasticsearch
+    environment:
+      - DB=postgres12
+      - DB_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PWD=postgres
+      - POSTGRES_SEEDS=t-postgresql
+      - DYNAMIC_CONFIG_FILE_PATH=config/dynamicconfig/temporal-sql.yml
+      - ENABLE_ES=true
+      - ES_SEEDS=t-elasticsearch
+      - ES_VERSION=v7
+    image: temporalio/auto-setup:${TEMPORAL_VERSION}
+    ports:
+      - 7233:7233
+    networks:
+      - default
+    volumes:
+      - ./config:/etc/temporal/config/dynamicconfig
+  t-temporal-admin-tools:
+    container_name: t-temporal-admin-tools
+    depends_on:
+      - t-temporal
+    environment:
+      - TEMPORAL_ADDRESS=t-temporal:7233
+      - TEMPORAL_CLI_ADDRESS=t-temporal:7233
+    image: temporalio/admin-tools:${TEMPORAL_ADMINTOOLS_VERSION}
+    stdin_open: true
+    tty: true
+    networks:
+      - default
+  t-temporal-ui:
+    container_name: t-temporal-ui
+    depends_on:
+      - t-temporal
+    environment:
+      - TEMPORAL_ADDRESS=t-temporal:7233
+      - TEMPORAL_CORS_ORIGINS=http://localhost:3000
+    image: temporalio/ui:${TEMPORAL_UI_VERSION}
+    ports:
+      - 8080:8080
+    networks:
+      - default

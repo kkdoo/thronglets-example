@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+gem "pg"
+gem "rails", "~> 8.0.2"
+gem "service_actor"
+gem "google-protobuf", "~> 3.19"
+gem "temporal-ruby", github: "coinbase/temporal-ruby", require: "temporal"
+gem "dry-schema"
+gem "thronglets"

@@ -1,0 +1,20 @@
+services:
+  t-core:
+    image: core
+    build:
+      context: ../../docker
+      target: core
+      args:
+        WORKDIR: /usr/src/app/thronglets/core
+    entrypoint: "./entrypoint.sh"
+    container_name: t-core
+    command: bash -c "bundle exec thronglets -l"
+    restart: unless-stopped
+    depends_on:
+      - t-temporal
+      - t-postgresql
+    networks:
+      - default
+    volumes:
+      - ../../:/usr/src/app
+      - ../../.docker/.volumes/core/bundle:/usr/local/bundle

@@ -1,0 +1,13 @@
+services:
+  t-postgresql:
+    container_name: t-postgresql
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    image: postgres:${POSTGRESQL_VERSION}
+    ports:
+      - 5432:5432
+    volumes:
+      - /var/lib/postgresql/data
+    networks:
+      - default

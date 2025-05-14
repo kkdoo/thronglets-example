@@ -17,12 +17,19 @@ default: &default
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-
+  pool: 5
+  host: t-postgresql
+  username: postgres
+  password: postgres
 
 development:
-  <<: *default
-  database: thronglets_example_development
+  primary:
+    <<: *default
+    database: primary_dev
+  core:
+    <<: *default
+    database: core_dev
+    migrations_paths: db/core_migrate
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -83,7 +90,7 @@ production:
     <<: *default
     database: thronglets_example_production
     username: thronglets_example
-    password: <%= ENV["THRONGLETS_EXAMPLE_DATABASE_PASSWORD"] %>
+    password:
   cache:
     <<: *primary_production
     database: thronglets_example_production_cache

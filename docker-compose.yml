@@ -1,0 +1,11 @@
+include:
+  - docker/elasticsearch.yml
+  - docker/postgresql.yml
+  - docker/temporal.yml
+  - docker/mono.yml
+  - thronglets/core/docker-compose.yml
+
+networks:
+  default:
+    name: thronglets_default
+    driver: bridge

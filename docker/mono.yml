@@ -1,0 +1,22 @@
+services:
+  t-mono:
+    container_name: t-mono
+    image: mono
+    build:
+      context: ./
+      target: mono
+      args:
+        WORKDIR: /usr/src/app
+    entrypoint: ./entrypoint.sh
+    command: bash -c "bundle exec rails s -b 0.0.0.0"
+    restart: unless-stopped
+    ports:
+      - 0.0.0.0:3000:3000
+    depends_on:
+      - t-temporal
+      - t-postgresql
+    networks:
+      - default
+    volumes:
+      - ../:/usr/src/app
+      - ../.docker/.volumes/mono/bundle:/usr/local/bundle
