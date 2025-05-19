@@ -41,7 +41,7 @@ gem "thruster", require: false
 # gem "image_processing", "~> 1.2"
 
 # thronglets dependecies
-gem "google-protobuf", "~> 3.19"
+gem "google-protobuf", "~> 4.31"
 gem "temporal-ruby", github: "coinbase/temporal-ruby"
 
 gem "thronglets"
